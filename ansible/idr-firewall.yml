@@ -4,6 +4,13 @@
     {{ idr_environment | default('idr') }}-database-hosts
     {{ idr_environment | default('idr') }}-omero-hosts
 
+  pre_tasks:
+    - name: system packages | install epel-release
+      become: true
+      ansible.builtin.dnf:
+        name: epel-release
+        state: present
+
   roles:
     - role: ome.iptables_raw
 
