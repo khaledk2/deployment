@@ -19,6 +19,7 @@
   become: true
 
   pre_tasks:
+  - name: check if user exist
     ansible.builtin.user:
       name: "omero-server"
     check_mode: true
