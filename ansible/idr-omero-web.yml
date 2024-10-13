@@ -19,11 +19,10 @@
   become: true
 
   pre_tasks:
-  - name: check if the ms role user exists
     ansible.builtin.user:
       name: "omero-server"
-      check_mode: true
-      register: service_user
+    check_mode: true
+    register: service_user
 
   roles:
   - role: ome.omero_ms_image_region
