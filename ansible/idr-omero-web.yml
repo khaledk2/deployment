@@ -11,22 +11,15 @@
 
   environment: "{{ idr_ANSIBLE_ENVIRONMENT_VARIABLES | default({}) }}"
 
-# This bloock will run in case of updating omero-web
-# It will check for the ms user exists
-# If so, it will run the role to update the omero web nginx configuration file
+# deploy ms
+# This will modify the omero web nginx configuration file
+# It should be executed after running idr-omero-web.yml
+# as it is in idr-01-install-idr.yml
 
 - hosts: "{{ idr_environment | default('idr') }}-omeroreadonly-hosts"
   become: true
 
-  pre_tasks:
-  - name: check if ms user exist
-    ansible.builtin.user:
-      name: "omero-server"
-    check_mode: true
-    register: service_user
-
   roles:
   - role: ome.omero_ms_image_region
-    when: "{{ service_user.state | d('') == 'present' }}"
 
   environment: "{{ idr_ANSIBLE_ENVIRONMENT_VARIABLES | default({}) }}"
