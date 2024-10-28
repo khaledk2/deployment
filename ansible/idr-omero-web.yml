@@ -10,3 +10,15 @@
   # Vars are in group_vars/omero-hosts.yml
 
   environment: "{{ idr_ANSIBLE_ENVIRONMENT_VARIABLES | default({}) }}"
+
+# deploy ms
+# This will modify the omero web nginx configuration file
+# It should be executed after running omero_web role
+
+- hosts: "{{ idr_environment | default('idr') }}-omeroreadonly-hosts"
+  become: true
+
+  roles:
+  - role: ome.omero_ms_image_region
+
+  environment: "{{ idr_ANSIBLE_ENVIRONMENT_VARIABLES | default({}) }}"
