@@ -15,7 +15,12 @@
       state: directory
       mode: 0755
 
+  - name: Changeto the folder and execute command
+    command: chdir=/tmp ls
+
   roles:
+
+  - role: ome.selinux_utils
 
   - role: ome.nfs_share
     nfs_shares:
@@ -57,10 +62,6 @@
         {{ hostvars[groups[idr_environment | default('idr') +
         '-omeroreadwrite-hosts'][0]][
         'ansible_' +(idr_net_iface | default('eth0'))]['ipv4']['address'] }}
-  - name: Change the working directory to /tmp
-    ansible.builtin.shell:
-      cmd: ls -l | grep log
-      chdir: /tmp
 
   roles:
   # Use the same paths as on the omeorreadwrite server to reduce confusion
