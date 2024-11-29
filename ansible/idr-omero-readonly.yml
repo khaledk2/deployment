@@ -15,13 +15,7 @@
       state: directory
       mode: 0755
 
-  - name: Changeto the folder and execute command
-    command: chdir=/tmp ls
-
   roles:
-
-  - role: ome.selinux_utils
-
   - role: ome.nfs_share
     nfs_shares:
       /data/OMERO:
@@ -63,8 +57,12 @@
         '-omeroreadwrite-hosts'][0]][
         'ansible_' +(idr_net_iface | default('eth0'))]['ipv4']['address'] }}
 
+  - name: change folder and execute command
+    command: chdir=/tmp ls
+
   roles:
   # Use the same paths as on the omeorreadwrite server to reduce confusion
+  - role: ome.selinux_utils
   - role: ome.nfs_mount
     nfs_share_mounts:
     - path: /data/OMERO-readonly
