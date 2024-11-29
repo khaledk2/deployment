@@ -57,8 +57,8 @@
         '-omeroreadwrite-hosts'][0]][
         'ansible_' +(idr_net_iface | default('eth0'))]['ipv4']['address'] }}
 
-  - name: change folder and execute command
-    command: chdir=/tmp ls
+#  - name: change folder and execute command
+#    command: chdir=/tmp ls
 
   roles:
   # Use the same paths as on the omeorreadwrite server to reduce confusion
