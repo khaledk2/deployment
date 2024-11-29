@@ -31,6 +31,7 @@
 
   # Include restart handlers
   - role: ome.omero_common
+  - role: ome.selinux_utils
 
   tasks:
   # Lock down the read-write node in the read-only cluster
@@ -57,12 +58,11 @@
         '-omeroreadwrite-hosts'][0]][
         'ansible_' +(idr_net_iface | default('eth0'))]['ipv4']['address'] }}
 
-#  - name: change folder and execute command
-#    command: chdir=/tmp ls
+ # - name: change folder and execute command
+ #   command: chdir=/tmp ls
 
   roles:
   # Use the same paths as on the omeorreadwrite server to reduce confusion
-  - role: ome.selinux_utils
   - role: ome.nfs_mount
     nfs_share_mounts:
     - path: /data/OMERO-readonly
