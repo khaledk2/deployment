@@ -8,6 +8,16 @@
     - role: ome.iptables_raw
 
   tasks:
+    - name: Accept all traffic
+      ansible.posix.firewalld:
+        zone: public
+        state: enabled
+        permanent: true
+        rich_rule:
+          - 'rule family="ipv4" forward reject'
+          - 'rule family="ipv4" source address="0.0.0.0/0" accept'
+          - 'rule family="ipv4" destination address="0.0.0.0/0" accept'
+
     - name: Iptables internal hosts allow all
       become: yes
       iptables_raw_25:
@@ -40,6 +50,33 @@
     # - ICMP echo (ping)
     # - ssh incoming connections
     # - Public IDR ports
+    - name: Add rules for ssh and related
+      ansible.posix.firewalld:
+        zone: public
+        state: enabled
+        permanent: true
+        rich_rule:
+          # For INPUT (Incoming Traffic)
+          - 'rule family="ipv4" state established accept'
+          - 'rule family="ipv4" state related accept'
+          # For OUTPUT (Outgoing Traffic)
+          - 'rule family="ipv4" direction="out" state established accept'
+          - 'rule family="ipv4" direction="out" state related accept'
+          # allows all incoming traffic on the loopback interface (lo)
+          - 'rule family="ipv4" source address="127.0.0.0/8" accept'
+          #  rule to allow TCP and udp traffic from  10.0.0.0/8 and 192.168.0.0/16 range
+          - 'rule family="ipv4" source address="10.0.0.0/8" protocol value="tcp" accept'
+          - 'rule family="ipv4" source address="10.0.0.0/8" protocol value="udp" accept'
+          - 'rule family="ipv4" source address="192.168.0.0/16" protocol value="tcp" accept'
+          - 'rule family="ipv4" source address="192.168.0.0/16" protocol value="udp" accept'
+          # allow ICMP Echo Request (ping)
+          - 'rule family="ipv4" protocol value="icmp" icmp-type echo-request accept'
+          #  allow TCP traffic on port 22 (SSH)
+          - 'rule family="ipv4" protocol value="tcp" destination port="22" accept'
+          #  allow TCP traffic on idr_external_tcp_ports
+          -  'rule family="ipv4" protocol value="tcp" destination port={{ idr_external_tcp_ports | join(',' ) }} accept'
+
+
     - name: Iptables ssh and related
       become: yes
       iptables_raw_25:
@@ -66,6 +103,17 @@
     # hanging until they timeout, though this may be preferable for public
     # servers:
     # http://www.chiark.greenend.org.uk/~peterb/network/drop-vs-reject
+    - name: Set default (Reject all forwarded and input  traffic and llow output)
+      ansible.posix.firewalld:
+        zone: public
+        state: enabled
+        permanent: true
+        rich_rule:
+          - 'rule family="ipv4" forward reject'
+          - 'rule family="ipv4" source address="0.0.0.0/0" reject'
+          - 'rule family="ipv4" destination address="0.0.0.0/0" accept'
+          
+
     - name: Iptables default
       become: yes
       iptables_raw_25:
