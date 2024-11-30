@@ -16,7 +16,7 @@
       mode: 0755
 
   roles:
-  - role: ome.selinux_utils
+
   - role: ome.nfs_share
     nfs_shares:
       /data/OMERO:
@@ -57,26 +57,9 @@
         {{ hostvars[groups[idr_environment | default('idr') +
         '-omeroreadwrite-hosts'][0]][
         'ansible_' +(idr_net_iface | default('eth0'))]['ipv4']['address'] }}
-    # selinux
-  - name: selinux booleans
-    become: true
-    seboolean:
-      name: "{{ item }}"
-      state: true
-      persistent: true
-    with_items:
-      - httpd_read_user_content
-      - httpd_enable_homedirs
-    when: selinux_enabled
-
-
-  #- name: change folder and execute command
-  #  command: chdir=/tmp ls
 
   roles:
   # Use the same paths as on the omeorreadwrite server to reduce confusion
-  - role: ome.selinux_utils
-
   - role: ome.nfs_mount
     nfs_share_mounts:
     - path: /data/OMERO-readonly
