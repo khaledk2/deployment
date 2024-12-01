@@ -84,7 +84,7 @@
   - name: Print to console
     debug:
       msg:
-        - "{{command_output5.stdout}}"
+        - "{{command_output5}}"
 
 # Read-only OMERO.server config
 - hosts: "{{ idr_environment | default('idr') }}-omeroreadonly-hosts"
