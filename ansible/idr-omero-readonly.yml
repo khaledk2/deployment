@@ -16,7 +16,7 @@
       mode: 0755
 
   roles:
-
+  - role: ome.selinux_utils
   - role: ome.nfs_share
     nfs_shares:
       /data/OMERO:
@@ -70,7 +70,6 @@
 
   roles:
   # Use the same paths as on the omeorreadwrite server to reduce confusion
-  - role: ome.selinux_utils
   - role: ome.nfs_mount
     nfs_share_mounts:
     - path: /data/OMERO-readonly
