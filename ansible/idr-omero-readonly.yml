@@ -35,6 +35,22 @@
 
   tasks:
   # Lock down the read-write node in the read-only cluster
+  - name: install checkpolicy
+    become: true
+    ansible.builtin.dnf:
+      update_cache: true
+      name:
+        - checkpolicy
+        - policycoreutils
+        - ipa-selinux
+  - name: Set selinux vars for nfs
+    ansible.posix.seboolean:
+      name:
+        - nfs_export_all_ro
+        - nfs_export_all_rw
+      state: true
+      persistent: true
+
   - name: check selinux
     debug:
      msg: "SELinux is enabled or permissive"
