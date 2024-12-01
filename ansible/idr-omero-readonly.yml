@@ -76,7 +76,13 @@
       mode: 0644
     notify:
     - restart omero-server
-
+  - name: Display nfs-server status
+    command: exportfs -ra
+    register: command_output5
+  - name: Print to console
+    debug:
+      msg:
+        - "{{command_output5.stdout}}"
 
 # Read-only OMERO.server config
 - hosts: "{{ idr_environment | default('idr') }}-omeroreadonly-hosts"
