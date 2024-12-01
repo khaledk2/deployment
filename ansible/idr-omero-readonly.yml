@@ -23,11 +23,17 @@
       state: present
 
   - name: Display nfs-server status
-    command:
-      - systemctl enable --now nfs-server
-      - firewall-cmd --permanent --add-service=nfs
-      - firewall-cmd --reload
+    command: systemctl enable --now nfs-server
     register: command_output
+
+  - name: Display nfs-server status
+    command: firewall-cmd --permanent --add-service=nfs
+    register: command_output
+
+  - name: Display nfs-server status
+    command: firewall-cmd --reload
+    register: command_output
+
 
   - name: Print to console
     debug:
