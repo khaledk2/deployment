@@ -44,11 +44,6 @@
     debug:
       msg: "{{command_output.stdout}}"
 
-  - name: Enable SELinux
-    ansible.posix.selinux:
-      policy: targeted
-      state: enforcing
-
   - name: install checkpolicy
     become: true
     ansible.builtin.dnf:
@@ -57,6 +52,14 @@
         - checkpolicy
         - policycoreutils
         - ipa-selinux
+        - python3-policycoreutils
+        - python3-libselinux
+
+  - name: Enable SELinux
+    ansible.posix.selinux:
+      policy: targeted
+      state: enforcing
+
   - name: Set selinux vars for nfs
     ansible.posix.seboolean:
       name:
