@@ -32,9 +32,23 @@
 
   # Include restart handlers
   - role: ome.omero_common
+  - role: ome.selinux_utils
 
   tasks:
   # Lock down the read-write node in the read-only cluster
+  - name: Display nfs config contents
+    command: cat /etc/exports
+    register: command_output
+
+  - name: Print to console
+    debug:
+      msg: "{{command_output.stdout}}"
+
+  - name: Enable SELinux
+    ansible.posix.selinux:
+      policy: targeted
+      state: enforcing
+
   - name: install checkpolicy
     become: true
     ansible.builtin.dnf:
@@ -50,6 +64,8 @@
         - nfs_export_all_rw
       state: true
       persistent: true
+
+
 
   - name: check selinux
     debug:
