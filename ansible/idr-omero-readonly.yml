@@ -25,19 +25,22 @@
   - name: Display nfs-server status
     command: systemctl enable --now nfs-server
     register: command_output
-
   - name: Display nfs-server status
-    command: firewall-cmd --permanent --add-service=nfs
-    register: command_output
-
+    command: ls -ld  /data/OMERO
+    register: command_output1
   - name: Display nfs-server status
-    command: firewall-cmd --reload
-    register: command_output
-
+    command: ls -ld /data/BioFormatsCache
+    register: command_output2
+  - name: Display nfs-server status
+    command: ls -ld /data/idr-metadata
+    register: command_output3
 
   - name: Print to console
     debug:
-      msg: "{{command_output.stdout}}"
+      msg:
+        - "{{command_output1.stdout}}"
+        - "{{command_output2.stdout}}"
+        - "{{command_output3.stdout}}"
 
   roles:
 
