@@ -16,7 +16,8 @@
       mode: 0755
 
   roles:
-  - role: ome.selinux_utils
+  - role: ome.redis
+  - role: ome.omero_web
   - role: ome.nfs_share
     nfs_shares:
       /data/OMERO:
