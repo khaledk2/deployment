@@ -8,9 +8,9 @@
 
 - import_playbook: idr-omero.yml
 
-- import_playbook: idr-omero-readonly.yml
-
 - import_playbook: idr-omero-web.yml
+
+- import_playbook: idr-omero-readonly.yml
 
   tags:
   # Requires NFS shares which can't be configured in Docker
