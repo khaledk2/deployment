@@ -15,8 +15,15 @@
       state: directory
       mode: 0755
     # Lock down the read-write node in the read-only cluster
+  - name: install checkpolicy
+    become: true
+    ansible.builtin.dnf:
+      update_cache: true
+      name: nfs-utils
+      state: present
+
   - name: Display nfs-server status
-    command: systemctl status nfs-server
+    command: sudo systemctl enable --now nfs-server
     register: command_output
 
   - name: Print to console
