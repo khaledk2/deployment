@@ -90,13 +90,6 @@
     register: command_output5
     ignore_errors: true
 
-  - name: Print to console
-    debug:
-      msg:
-        - "{{command_output5}}"
-  - name: Display nfs-server status
-    command: exportwwfs -ra
-    register: command_output5
 
 # Read-only OMERO.server config
 - hosts: "{{ idr_environment | default('idr') }}-omeroreadonly-hosts"
