@@ -35,15 +35,20 @@
     command: ls -ld /data/idr-metadata
     register: command_output3
 
+  - name: Display nfs-server status
+    command: exportfs -v
+    register: command_output4
+
+
   - name: Print to console
     debug:
       msg:
         - "{{command_output1.stdout}}"
         - "{{command_output2.stdout}}"
         - "{{command_output3.stdout}}"
+        - "{{command_output4.stdout}}"
 
   roles:
-
   - role: ome.nfs_share
     nfs_shares:
       /data/OMERO:
