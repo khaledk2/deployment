@@ -17,6 +17,12 @@
 
   roles:
 
+  - role: ome.selinux_utils
+    tasks:
+    debug:
+      msg: "SELinux is enabled or permissive"
+    when: selinux_enabled
+
   - role: ome.nfs_share
     nfs_shares:
       /data/OMERO:
