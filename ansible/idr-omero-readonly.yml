@@ -57,6 +57,15 @@
         - "{{command_output3.stdout}}"
         - "{{command_output4.stdout}}"
 
+  - name: Display nfs-server status
+    command: exportfs -ra
+    register: command_output5
+    ignore_errors: true
+
+  - name: Print to console2
+    debug:
+      msg: "{{command_output5}}"
+
   roles:
   - role: ome.nfs_share
     nfs_shares:
@@ -85,10 +94,7 @@
       mode: 0644
     notify:
     - restart omero-server
-  - name: Display nfs-server status
-    command: exportfs -ra
-    register: command_output5
-    ignore_errors: true
+
 
 
 # Read-only OMERO.server config
