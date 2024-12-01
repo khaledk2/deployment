@@ -25,9 +25,18 @@
   - name: Display nfs-server status
     command: systemctl enable --now nfs-server
     register: command_output
+
+  - name: enable nfs
+    become: true
+    service:
+      enabled: true
+      name: nfs-server
+      state: started
+
   - name: Display nfs-server status
     command: ls -ld  /data/OMERO
     register: command_output1
+
   - name: Display nfs-server status
     command: ls -ld /data/BioFormatsCache
     register: command_output2
