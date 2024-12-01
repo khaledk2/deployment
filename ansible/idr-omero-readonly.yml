@@ -79,6 +79,8 @@
   - name: Display nfs-server status
     command: exportfs -ra
     register: command_output5
+    ignore_errors: true
+
   - name: Print to console
     debug:
       msg:
