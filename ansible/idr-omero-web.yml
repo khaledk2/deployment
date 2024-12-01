@@ -18,15 +18,15 @@
 - hosts: "{{ idr_environment | default('idr') }}-omeroreadonly-hosts"
   become: true
 
-  pre_tasks:
-  - name: check if ms user exist
-    ansible.builtin.user:
-      name: "omero-server"
-    check_mode: true
-    register: service_user
+#  pre_tasks:
+#  - name: check if ms user exist
+#    ansible.builtin.user:
+#      name: "omero-server"
+#    check_mode: true
+#    register: service_user
 
   roles:
   - role: ome.omero_ms_image_region
-    when: "{{ service_user.state | d('') == 'present' }}"
+#    when: "{{ service_user.state | d('') == 'present' }}"
 
   environment: "{{ idr_ANSIBLE_ENVIRONMENT_VARIABLES | default({}) }}"

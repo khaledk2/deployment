@@ -16,6 +16,7 @@
       mode: 0755
 
   roles:
+
   - role: ome.nfs_share
     nfs_shares:
       /data/OMERO:
@@ -185,7 +186,6 @@
         '[},]'
       ))
 
-
 - hosts: "{{ idr_environment | default('idr') }}-omeroreadonly-hosts"
   tasks:
   - name: Get database host
@@ -194,7 +194,6 @@
         {{ hostvars[groups[idr_environment | default('idr') +
         '-database-hosts'][0]][
         'ansible_' + (idr_net_iface | default('eth0'))]['ipv4']['address'] }}
-
 
 - hosts: >
     {{ idr_environment | default('idr') }}-omeroreadonly-hosts
@@ -238,15 +237,3 @@
         path: "{{ omero_common_basedir }}/server/OMERO.server/lib/scripts/omero"
         state: absent
       notify: restart omero-server
-
-# deploy ms
-# This will modify the omero web nginx configuration file
-# It should be executed after running idr-omero-web.yml
-# as it is in idr-01-install-idr.yml
-- hosts: "{{ idr_environment | default('idr') }}-omeroreadonly-hosts"
-  become: true
-
-  roles:
-  - role: ome.omero_ms_image_region
-
-  environment: "{{ idr_ANSIBLE_ENVIRONMENT_VARIABLES | default({}) }}"
