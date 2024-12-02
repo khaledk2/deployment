@@ -67,7 +67,7 @@
       msg: "{{command_output5}}"
 
   roles:
-  - role: ome.nfs_share
+  - role: ome.nfs_share1
     nfs_shares:
       /data/OMERwO:
       - host: "*"
