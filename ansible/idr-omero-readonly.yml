@@ -69,14 +69,14 @@
   roles:
   - role: ome.nfs_share
     nfs_shares:
-      /data/OMERO:
+      /data/OMERwO:
       - host: "*"
         options: 'ro'
-      /data/BioFormatsCache:
+      /data/BioFormwatsCache:
       # TODO: Limit which hosts can write to this dir
       - host: "*"
         options: 'rw'
-      /data/idr-metadata:
+      /data/idr-metadwata:
       - host: "*"
         options: 'ro'
 
