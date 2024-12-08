@@ -41,7 +41,7 @@
           - "rule family='ipv4' state related accept"
           # For OUTPUT (Outgoing Traffic)
           - "rule family='ipv4' direction='out' state established accept"
-          - "rule family="ipv4" direction='out' state related accept"
+          - "rule family='ipv4' direction='out' state related accept"
           # allows all incoming traffic on the loopback interface (lo)
           - "rule family='ipv4' source address='127.0.0.0/8' accept"
           #  rule to allow TCP and udp traffic from  10.0.0.0/8 and 192.168.0.0/16 range
