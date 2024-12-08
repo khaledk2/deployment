@@ -5,12 +5,20 @@
     {{ idr_environment | default('idr') }}-omero-hosts
 
   tasks:
-    - name: install firwalld
+    - name: install python3-firewall
       become: true
       ansible.builtin.dnf:
         update_cache: true
-        name: python3-firewall
+        name:
+          - python3-firewall
+          - firewalld
         state: present
+
+    - name: Enable service firewall
+      ansible.builtin.service:
+        name: httpd
+        enabled: yes
+        state: started
 
     - name: Accept all traffic
       ansible.posix.firewalld:
@@ -29,12 +37,21 @@
 - hosts: "{{ idr_environment | default('idr') }}-proxy-hosts"
 
   tasks:
-    - name: install firwalld
+    - name: install python3-firewall
       become: true
       ansible.builtin.dnf:
         update_cache: true
-        name: python3-firewall
+        name:
+          - python3-firewall
+          - firewalld
         state: present
+
+    - name: Enable service firewall
+      ansible.builtin.service:
+        name: httpd
+        enabled: yes
+        state: started
+
     # Allow:
     # - all established/related in/out
     # - all internal localhost connections
