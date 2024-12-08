@@ -14,7 +14,7 @@
           - firewalld
         state: present
 
-    - name: Enable service firewall
+    - name: Enable service firewalld
       ansible.builtin.service:
         name: firewalld
         enabled: yes
@@ -48,7 +48,7 @@
 
     - name: Enable service firewall
       ansible.builtin.service:
-        name: httpd
+        name: firewalld
         enabled: yes
         state: started
 
