@@ -27,8 +27,8 @@
         permanent: true
         rich_rule:
           - "rule family='ipv4' forward accept"
-          - "rule family='ipv4' source address='0.0.0.0/0' accept"
-          - "rule family='ipv4' destination address='0.0.0.0/0' accept"
+          - "rule family='ipv4' accept"
+          - "rule family='ipv4' direction='out' accept"
 
   # Docker sets up its own rules, don't overwrite
 # - hosts: >
@@ -98,8 +98,8 @@
         permanent: true
         rich_rule:
           - "rule family='ipv4' forward reject"
-          - "rule family='ipv4' source address='0.0.0.0/0' reject"
-          - "rule family='ipv4' destination address='0.0.0.0/0' accept"
+          - "rule family='ipv4' accept"
+          - "rule family='ipv4' direction='out' accept"
 
   vars:
     idr_external_tcp_ports:
