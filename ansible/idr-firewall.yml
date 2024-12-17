@@ -89,12 +89,14 @@
           #  allow TCP traffic on idr_external_tcp_ports
           - 'rule family="ipv4" protocol value="tcp" destination port={{ idr_external_tcp_ports | join("," ) }} accept'
 
-    - name: Run command
+    - name: Run command 1
       become: true
-      ansible.builtin.command :
-      - firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -p tcp -s 192.0.0.0/8 --dport 80 -j ACCEPT
-      - firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -p tcp -s 192.0.0.0/8 -j ACCEPT
-      -
+      ansible.builtin.command: firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -p tcp -s 192.0.0.0/8 --dport 80 -j ACCEPT
+
+    - name: Run command 2
+      become: true
+      ansible.builtin.command: firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -p tcp -s 192.0.0.0/8 -j ACCEPT
+
     # Use a low priority REJECT rule so that clients can detect when
     # they've been rejected
     # The alternative of setting a default DROP policy will leave them
