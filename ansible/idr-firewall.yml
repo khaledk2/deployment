@@ -25,12 +25,15 @@
         state: enabled
         permanent: true
         rich_rule:
-          - "rule family='ipv4' forward accept"
+          #- "rule family='ipv4' forward accept"
           - 'rule family="ipv4" destination address="0.0.0.0/0" accept'
           #firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -j ACCEPT
           #- firewall-cmd --add-rich-rule='rule family="ipv4" destination address="0.0.0.0/0" accept'
           - 'rule family="ipv4" direction="out" accept'
 
+    - name: Run command 1
+      become: true
+      ansible.builtin.command: firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -j ACCEPT
 #   Docker sets up its own rules, don't overwrite
 # - hosts: >
 #     {{ idr_environment | default('idr') }}-management-hosts
