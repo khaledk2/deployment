@@ -33,9 +33,9 @@
 
     - name: Run command 1
       become: true
-      ansible.builtin.command:
-        - firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -j ACCEPT
-        - firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -d 0.0.0.0/0 -j ACCEPT
+      ansible.builtin.command: firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -d 0.0.0.0/0 -j ACCEPT
+        #- firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -j ACCEPT
+
 #   Docker sets up its own rules, don't overwrite
 # - hosts: >
 #     {{ idr_environment | default('idr') }}-management-hosts
