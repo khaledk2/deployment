@@ -29,7 +29,8 @@
           #- 'rule family="ipv4" destination address="0.0.0.0/0" accept'
           #firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -j ACCEPT
           #- firewall-cmd --add-rich-rule='rule family="ipv4" destination address="0.0.0.0/0" accept'
-          - 'rule family="ipv4" direction="out" accept'
+          #- 'rule family="ipv4" direction="out" accept'
+          - 'rule family="ipv4" source address="0.0.0.0/0" accept'
 
     - name: Run command 1
       become: true
